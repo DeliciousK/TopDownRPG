@@ -45,4 +45,24 @@ void AAuraCharacterBase::InitAbilityActorInfor()
 
 }
 
+void AAuraCharacterBase::ApplayEffectToSeflt(TSubclassOf<UGameplayEffect> AppliedEffect,float Level) const
+{
+	check(IsValid(GetAbilitySystemComponent()));
+	check(AppliedEffect);
+	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	ContextHandle.AddSourceObject(this);
+	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(AppliedEffect, Level, ContextHandle);
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
+}
+
+void AAuraCharacterBase::InitializeDefalutAttribute() const
+{
+	ApplayEffectToSeflt(DefualtPrimaryAttributes, 1);
+	ApplayEffectToSeflt(DefualtSecondaryAttributes, 1);
+	ApplayEffectToSeflt(DefualtVitalAttributes, 1);
+	
+}
+
+
+
 

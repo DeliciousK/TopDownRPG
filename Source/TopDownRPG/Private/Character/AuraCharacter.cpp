@@ -40,6 +40,13 @@ void AAuraCharacter::OnRep_PlayerState()
 	InitAbilityActorInfor();
 }
 
+int32 AAuraCharacter::GetPlayerLevel() 
+{
+	const AAruaPlayerState* AuraPS = GetPlayerState<AAruaPlayerState>();
+	check(AuraPS);
+	return AuraPS->GetPlayerLevel();
+}
+
 void AAuraCharacter::InitAbilityActorInfor()
 {
 	AAruaPlayerState* AuraPS = GetPlayerState<AAruaPlayerState>();
@@ -57,6 +64,7 @@ void AAuraCharacter::InitAbilityActorInfor()
 		}
 		
 	}
+	InitializeDefalutAttribute();
 	//Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectApplied();
 
 }

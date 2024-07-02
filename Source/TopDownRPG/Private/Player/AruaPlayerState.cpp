@@ -14,7 +14,19 @@ AAruaPlayerState::AAruaPlayerState()
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 }
 
+void AAruaPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AAruaPlayerState, Level);
+}
+
 UAbilitySystemComponent* AAruaPlayerState::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void AAruaPlayerState::OnRep_Level(int32 OldLevel)
+{
+
 }

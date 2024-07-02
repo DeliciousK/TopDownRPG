@@ -8,30 +8,48 @@
 #include <AbilitySystemComponent.h>
 #include "AttributeSet.h"
 #include "AbilitySystemInterface.h"
+#include "Interaction/CombatInterface.h"
 #include "AuraCharacterBase.generated.h"
 
 
 UCLASS()
-class TOPDOWNRPG_API AAuraCharacterBase : public ACharacter,public IAbilitySystemInterface
+class TOPDOWNRPG_API AAuraCharacterBase : public ACharacter,public IAbilitySystemInterface,public ICombatInterface
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
+	
 	AAuraCharacterBase();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet;}
+
+
+
 protected:
-	// Called when the game starts or when spawned
+	
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
-	//----------
+	
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent>AbilitySystemComponent;
 	UPROPERTY()
 	TObjectPtr<UAttributeSet>AttributeSet;
 
 	virtual void InitAbilityActorInfor();
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect>DefualtPrimaryAttributes;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect>DefualtSecondaryAttributes;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect>DefualtVitalAttributes;
+
+
+	void ApplayEffectToSeflt(TSubclassOf<UGameplayEffect>AppliedEffect,float Level)const;
+	void InitializeDefalutAttribute()const;
+
 };

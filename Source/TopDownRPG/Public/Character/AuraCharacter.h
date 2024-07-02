@@ -22,6 +22,12 @@ public:
 	virtual void BeginPlay()override;
 	virtual void PossessedBy(AController* NewController)override;
 	virtual void OnRep_PlayerState()override;
+
+	/*CombatInterface*/
+	virtual int32 GetPlayerLevel()  override;
+
+	/*End CombatInterface*/
+
 private:
 	void InitAbilityActorInfor() override;
 
