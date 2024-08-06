@@ -11,10 +11,20 @@ UOverlayWidgetController* AAuraUUD::GetOverlayWidgetController(const FWidgetCont
 		OverlayWidgetController->SetWidgetControllerParams(WCParams);
 		//在设置4要素那一刻就可以绑定了Attribute监听。Controller依赖数据层
 		OverlayWidgetController->BindCallbacksToDependencies();
-
-		return  OverlayWidgetController;
 	}
 	return  OverlayWidgetController;
+}
+
+UAttributeMenuWidgetController* AAuraUUD::GetUAttributeMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+	check(MenuWidgetControllerClass)
+	if (MenuWidgetController == nullptr) {
+
+		MenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, MenuWidgetControllerClass);
+		MenuWidgetController->SetWidgetControllerParams(WCParams);
+		MenuWidgetController->BroadcastInitialValues();
+	}
+	return MenuWidgetController;
 }
 
 void AAuraUUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)

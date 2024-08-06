@@ -10,6 +10,7 @@
 #include "GameplayEffectTypes.h"
 #include "GameFramework/Character.h"
 #include <AbilitySystemBlueprintLibrary.h>
+#include <AuraGameplayTags.h>
 #include "AuraAttributeSet.generated.h"
 
 //GAMEPLAYATTRIBUTE_PROPERTY_GETTER(UAuraAttributeSet, MaxHealth)
@@ -19,7 +20,11 @@
  	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
  	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
- 
+//DECLARE_DELEGATE_RetVal(FGameplayAttribute, FAttributeSignature);
+
+
+
+
 USTRUCT()
 struct  FEffectProperties {
 
@@ -51,6 +56,10 @@ struct  FEffectProperties {
 	TObjectPtr<ACharacter> TargetCharacter = nullptr;
 
 };
+//typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr  AttributeFuncPtr;
+//更加通用
+template<class T>
+using  TStaticFuncPtr= typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
 
 UCLASS()
 class TOPDOWNRPG_API UAuraAttributeSet : public UAttributeSet
@@ -64,6 +73,16 @@ public:
 
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
+
+	//改进过程
+	//TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr FunctionPointer;
+
+	/*TMap<FGameplayTag,
+		TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr> TagsToAttributes;
+
+	*/
+	//TMap < FGameplayTag, FGameplayAttribute(*)()>TagsToAttributes;
+	TMap < FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>>TagsToAttributes;
 
 	/*
 		------------------------------------------------------------------------------------

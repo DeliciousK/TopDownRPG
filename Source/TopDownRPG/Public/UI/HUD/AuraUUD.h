@@ -6,7 +6,9 @@
 #include "GameFramework/HUD.h"
 #include <UI/Widget/AuraUserWidget.h>
 #include <UI/WidgetController/OverlayWidgetController.h>
+#include <UI/WidgetController/AttributeMenuWidgetController.h>
 #include "AuraUUD.generated.h"
+
 
 
 
@@ -17,9 +19,10 @@ class TOPDOWNRPG_API AAuraUUD : public AHUD
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY()
-	TObjectPtr<UAuraUserWidget>OverlayWidget ;
+	
+	
 	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
+	UAttributeMenuWidgetController* GetUAttributeMenuWidgetController(const FWidgetControllerParams& WCParams);
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 protected :
 	
@@ -27,7 +30,17 @@ private:
 	UPROPERTY(EditAnywhere, Category = "AuraUI")
 	TSubclassOf<UAuraUserWidget>OverlayWidgetClass;
 	UPROPERTY()
+	TObjectPtr<UAuraUserWidget>OverlayWidget;
+	UPROPERTY()
 	TObjectPtr<UOverlayWidgetController> OverlayWidgetController;
 	UPROPERTY(EditAnywhere, Category = "AuraUI")
 	TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
+
+
+	UPROPERTY()
+	TObjectPtr<UAttributeMenuWidgetController> MenuWidgetController;
+	
+	UPROPERTY(EditAnywhere, Category = "AuraUI")
+	TSubclassOf<UAttributeMenuWidgetController> MenuWidgetControllerClass;
+
 };
